@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>테이블오더 관리자 대시보드 (샘플)</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; }
+    
+    /* Header */
+    .header { background: #1a1a2e; color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { font-size: 20px; }
+    .header .store-info { font-size: 14px; color: #aaa; }
+    
+    /* Main Layout */
+    .main { padding: 24px; }
+    .section-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #333; }
+    
+    /* Table Grid */
+    .table-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    
+    /* Table Card */
+    .table-card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+    .table-card.has-orders { border-left: 4px solid #4CAF50; }
+    .table-card.new-order { border-left: 4px solid #FF5722; animation: pulse 2s infinite; }
+    
+    @keyframes pulse { 0%, 100% { box-shadow: 0 2px 8px rgba(0,0,0,0.1); } 50% { box-shadow: 0 4px 20px rgba(255,87,34,0.3); } }
+    
+    .table-header { padding: 16px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+    .table-number { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+    .table-total { font-size: 16px; font-weight: 600; color: #4CAF50; }
+    
+    .table-body { padding: 16px; }
+    .order-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+    .order-item:last-child { border-bottom: none; }
+    .order-time { color: #888; font-size: 12px; }
+    .order-menu { color: #333; }
+    .order-status { font-size: 12px; padding: 4px 8px; border-radius: 4px; }
+    .status-waiting { background: #FFF3E0; color: #E65100; }
+    .status-preparing { background: #E3F2FD; color: #1565C0; }
+    .status-complete { background: #E8F5E9; color: #2E7D32; }
+    
+    .table-actions { padding: 12px 16px; background: #fafafa; display: flex; gap: 8px; }
+    .btn { padding: 8px 12px; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; }
+    .btn-primary { background: #1a1a2e; color: white; }
+    .btn-danger { background: #ffebee; color: #c62828; }
+    .btn-success { background: #e8f5e9; color: #2e7d32; }
+    
+    /* Empty Table */
+    .table-empty { padding: 32px 16px; text-align: center; color: #999; }
+    
+    /* New Order Badge */
+    .new-badge { background: #FF5722; color: white; font-size: 11px; padding: 2px 6px; border-radius: 10px; margin-left: 8px; }
+    
+    /* Filter Bar */
+    .filter-bar { margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .filter-btn { padding: 8px 16px; border: 1px solid #ddd; background: white; border-radius: 20px; font-size: 14px; cursor: pointer; }
+    .filter-btn.active { background: #1a1a2e; color: white; border-color: #1a1a2e; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div>
+      <h1>🍽️ 테이블오더 관리자</h1>
+      <span class="store-info">맛있는 식당 | 관리자: admin</span>
+    </div>
+    <div style="display: flex; gap: 12px; align-items: center;">
+      <span style="font-size: 14px;">🟢 실시간 연결됨</span>
+      <button class="btn btn-danger" style="font-size: 12px;">로그아웃</button>
+    </div>
+  </header>
+  
+  <main class="main">
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <button class="filter-btn active">전체 (6)</button>
+      <button class="filter-btn">주문 있음 (4)</button>
+      <button class="filter-btn">신규 주문 (1)</button>
+      <button class="filter-btn">빈 테이블 (2)</button>
+    </div>
+    
+    <h2 class="section-title">테이블 현황</h2>
+    
+    <div class="table-grid">
+      <!-- Table 1 - New Order -->
+      <div class="table-card new-order">
+        <div class="table-header">
+          <span class="table-number">테이블 1 <span class="new-badge">NEW</span></span>
+          <span class="table-total">₩45,000</span>
+        </div>
+        <div class="table-body">
+          <div class="order-item">
+            <div>
+              <div class="order-time">13:04 (방금)</div>
+              <div class="order-menu">김치찌개 x2, 공기밥 x2</div>
+            </div>
+            <span class="order-status status-waiting">대기중</span>
+          </div>
+          <div class="order-item">
+            <div>
+              <div class="order-time">12:58</div>
+              <div class="order-menu">제육볶음 x1</div>
+            </div>
+            <span class="order-status status-preparing">준비중</span>
+          </div>
+        </div>
+        <div class="table-actions">
+          <button class="btn btn-primary">상태 변경</button>
+          <button class="btn btn-danger">주문 삭제</button>
+          <button class="btn btn-success">이용 완료</button>
+        </div>
+      </div>
+      
+      <!-- Table 2 - Has Orders -->
+      <div class="table-card has-orders">
+        <div class="table-header">
+          <span class="table-number">테이블 2</span>
+          <span class="table-total">₩32,000</span>
+        </div>
+        <div class="table-body">
+          <div class="order-item">
+            <div>
+              <div class="order-time">12:45</div>
+              <div class="order-menu">된장찌개 x2, 계란말이 x1</div>
+            </div>
+            <span class="order-status status-preparing">준비중</span>
+          </div>
+        </div>
+        <div class="table-actions">
+          <button class="btn btn-primary">상태 변경</button>
+          <button class="btn btn-danger">주문 삭제</button>
+          <button class="btn btn-success">이용 완료</button>
+        </div>
+      </div>
+      
+      <!-- Table 3 - Complete -->
+      <div class="table-card has-orders">
+        <div class="table-header">
+          <span class="table-number">테이블 3</span>
+          <span class="table-total">₩28,000</span>
+        </div>
+        <div class="table-body">
+          <div class="order-item">
+            <div>
+              <div class="order-time">12:30</div>
+              <div class="order-menu">비빔밥 x2</div>
+            </div>
+            <span class="order-status status-complete">완료</span>
+          </div>
+        </div>
+        <div class="table-actions">
+          <button class="btn btn-primary">상태 변경</button>
+          <button class="btn btn-danger">주문 삭제</button>
+          <button class="btn btn-success">이용 완료</button>
+        </div>
+      </div>
+      
+      <!-- Table 4 - Empty -->
+      <div class="table-card">
+        <div class="table-header">
+          <span class="table-number">테이블 4</span>
+          <span class="table-total" style="color: #999;">₩0</span>
+        </div>
+        <div class="table-empty">
+          주문 없음
+        </div>
+        <div class="table-actions">
+          <button class="btn" style="background: #eee; color: #666;">과거 내역</button>
+        </div>
+      </div>
+      
+      <!-- Table 5 - Has Orders -->
+      <div class="table-card has-orders">
+        <div class="table-header">
+          <span class="table-number">테이블 5</span>
+          <span class="table-total">₩67,000</span>
+        </div>
+        <div class="table-body">
+          <div class="order-item">
+            <div>
+              <div class="order-time">12:50</div>
+              <div class="order-menu">삼겹살 2인분, 된장찌개 x1</div>
+            </div>
+            <span class="order-status status-complete">완료</span>
+          </div>
+          <div class="order-item">
+            <div>
+              <div class="order-time">12:55</div>
+              <div class="order-menu">소주 x2, 콜라 x1</div>
+            </div>
+            <span class="order-status status-complete">완료</span>
+          </div>
+        </div>
+        <div class="table-actions">
+          <button class="btn btn-primary">상태 변경</button>
+          <button class="btn btn-danger">주문 삭제</button>
+          <button class="btn btn-success">이용 완료</button>
+        </div>
+      </div>
+      
+      <!-- Table 6 - Empty -->
+      <div class="table-card">
+        <div class="table-header">
+          <span class="table-number">테이블 6</span>
+          <span class="table-total" style="color: #999;">₩0</span>
+        </div>
+        <div class="table-empty">
+          주문 없음
+        </div>
+        <div class="table-actions">
+          <button class="btn" style="background: #eee; color: #666;">과거 내역</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

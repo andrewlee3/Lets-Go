@@ -41,3 +41,13 @@
 - 샘플 메뉴 Seed: MVP 포함
 
 ---
+
+## Requirements 명확화 반영
+**Timestamp**: 2026-02-25T13:23:35+09:00
+**User Input**: "requirements문서 명확화" 문서 작성 후 반영 요청
+**AI Response**: requirements.md, backlog.md, scope-analysis.md 업데이트
+**Context**: 
+- MVP 포함: 테이블별 카드(총 주문액, 주문 시간), 주문 상태 변경(주문접수/조리중/완료 버튼), 지연 주문 강조(30분 경과 시 카드 색상)
+- MVP 제외: 최신 주문 미리보기, 테이블별 필터링, 신규 주문 강조(지연 주문 강조로 대체)
+
+---
