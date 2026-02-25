@@ -3,6 +3,9 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAdminAuth } from '@/contexts/AdminAuthContext'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -21,59 +24,74 @@ export default function LoginPage() {
       await login(storeId, username, password)
       router.push('/admin/dashboard')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed')
+      setError(err instanceof Error ? err.message : '로그인 실패')
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-96">
-        <h1 className="text-2xl font-bold mb-6 text-center">관리자 로그인</h1>
+    <div className="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-black p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl">관리자 로그인</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <div data-testid="login-error" className="bg-destructive/10 text-destructive p-3 rounded-md text-sm">
+                {error}
+              </div>
+            )}
 
-        {error && (
-          <div data-testid="login-error" className="bg-red-100 text-red-700 p-3 rounded mb-4">
-            {error}
-          </div>
-        )}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">매장 식별자</label>
+              <Input
+                data-testid="login-store-id"
+                type="text"
+                placeholder="store1"
+                value={storeId}
+                onChange={(e) => setStoreId(e.target.value)}
+                required
+              />
+            </div>
 
-        <input
-          data-testid="login-store-id"
-          type="text"
-          placeholder="매장 식별자"
-          value={storeId}
-          onChange={(e) => setStoreId(e.target.value)}
-          className="w-full p-3 border rounded mb-4"
-          required
-        />
-        <input
-          data-testid="login-username"
-          type="text"
-          placeholder="사용자명"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="w-full p-3 border rounded mb-4"
-          required
-        />
-        <input
-          data-testid="login-password"
-          type="password"
-          placeholder="비밀번호"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-3 border rounded mb-4"
-          required
-        />
-        <button
-          data-testid="login-submit"
-          type="submit"
-          disabled={isLoading}
-          className="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700 disabled:opacity-50"
-        >
-          {isLoading ? '로그인 중...' : '로그인'}
-        </button>
-      </form>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">사용자명</label>
+              <Input
+                data-testid="login-username"
+                type="text"
+                placeholder="admin"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">비밀번호</label>
+              <Input
+                data-testid="login-password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <Button
+              data-testid="login-submit"
+              type="submit"
+              disabled={isLoading}
+              className="w-full"
+              size="lg"
+            >
+              {isLoading ? '로그인 중...' : '로그인'}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   )
 }
