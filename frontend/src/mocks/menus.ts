@@ -8,7 +8,7 @@ export const mockCategories: Category[] = [
   { id: 'cat-2', name: '음료', order: 2 },
   { id: 'cat-3', name: '디저트', order: 3 },
   { id: 'cat-4', name: '브런치', order: 4 },
-  { id: 'cat-5', name: '베이커리', order: 5 },
+  { id: 'cat-5', name: '빵', order: 5 },
 ];
 
 export const mockMenus: Menu[] = [
