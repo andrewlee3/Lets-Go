@@ -5,7 +5,6 @@ import { useAdminAuth } from '@/contexts/AdminAuthContext'
 import { useAdminSSE } from '@/hooks/useAdminSSE'
 import { adminApi } from '@/api/admin'
 import { TableWithOrders, OrderStatus } from '@/types'
-import { Button } from '@/components/ui/button'
 import TableCard from './TableCard'
 import OrderDetailModal from './OrderDetailModal'
 import TableHistoryModal from './TableHistoryModal'
@@ -37,14 +36,14 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-black">
-      <header className="bg-white dark:bg-zinc-900 border-b px-6 py-4 flex justify-between items-center">
+    <div className="min-h-screen bg-gray-100">
+      <header className="bg-white shadow p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold">주문 관리</h1>
-        <Button variant="outline" onClick={logout}>로그아웃</Button>
+        <button onClick={logout} className="text-gray-600 hover:text-gray-800">로그아웃</button>
       </header>
 
-      <main className="p-6">
-        <div data-testid="dashboard-grid" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <main className="p-4">
+        <div data-testid="dashboard-grid" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {tables.map((table) => (
             <TableCard
               key={table.table.id}
@@ -53,12 +52,6 @@ export default function DashboardPage() {
             />
           ))}
         </div>
-
-        {tables.length === 0 && (
-          <div className="text-center text-muted-foreground py-12">
-            현재 주문이 없습니다.
-          </div>
-        )}
       </main>
 
       {selectedTable && (

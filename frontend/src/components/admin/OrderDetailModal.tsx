@@ -2,9 +2,6 @@
 
 import { useState } from 'react'
 import { TableWithOrders, OrderStatus } from '@/types'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
-import { Card, CardContent } from '@/components/ui/card'
 
 interface OrderDetailModalProps {
   table: TableWithOrders
@@ -41,99 +38,92 @@ export default function OrderDetailModal({
   }
 
   return (
-    <>
-      <Dialog open onOpenChange={onClose}>
-        <DialogContent data-testid="order-detail-modal" className="max-w-2xl max-h-[90vh] overflow-auto">
-          <DialogHeader>
-            <DialogTitle>테이블 {table.table.tableNumber}번</DialogTitle>
-          </DialogHeader>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div data-testid="order-detail-modal" className="bg-white rounded-lg w-full max-w-2xl max-h-[90vh] overflow-auto">
+        <div className="p-4 border-b flex justify-between items-center">
+          <h2 className="text-xl font-bold">테이블 {table.table.tableNumber}</h2>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">✕</button>
+        </div>
 
-          <div className="space-y-3">
-            {table.orders.map((order) => (
-              <Card key={order.id} className="py-3">
-                <CardContent className="pt-0">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold">{order.orderNumber}</span>
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${
-                      order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                      order.status === 'preparing' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
-                    }`}>
-                      {statusLabels[order.status]}
-                    </span>
+        <div className="p-4 space-y-4">
+          {table.orders.map((order) => (
+            <div key={order.id} className="border rounded p-3">
+              <div className="flex justify-between items-center mb-2">
+                <span className="font-semibold">{order.orderNumber}</span>
+                <span className={`px-2 py-1 rounded text-sm ${
+                  order.status === 'pending' ? 'bg-yellow-100' :
+                  order.status === 'preparing' ? 'bg-blue-100' : 'bg-green-100'
+                }`}>
+                  {statusLabels[order.status]}
+                </span>
+              </div>
+              <div className="space-y-1">
+                {order.items.map((item, i) => (
+                  <div key={i} className="flex justify-between text-sm">
+                    <span>{item.menuName} x {item.quantity}</span>
+                    <span>{(item.unitPrice * item.quantity).toLocaleString()}원</span>
                   </div>
-                  <div className="space-y-1 text-sm">
-                    {order.items.map((item, i) => (
-                      <div key={i} className="flex justify-between">
-                        <span>{item.menuName} x {item.quantity}</span>
-                        <span className="text-muted-foreground">{(item.unitPrice * item.quantity).toLocaleString()}원</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-3 flex gap-2 flex-wrap">
-                    <Button
-                      data-testid={`status-pending-${order.id}`}
-                      variant="outline"
-                      size="xs"
-                      onClick={() => onStatusChange(order.id, 'pending')}
-                    >
-                      주문접수
-                    </Button>
-                    <Button
-                      data-testid={`status-preparing-${order.id}`}
-                      variant="outline"
-                      size="xs"
-                      onClick={() => onStatusChange(order.id, 'preparing')}
-                    >
-                      조리중
-                    </Button>
-                    <Button
-                      data-testid={`status-completed-${order.id}`}
-                      variant="outline"
-                      size="xs"
-                      onClick={() => onStatusChange(order.id, 'completed')}
-                    >
-                      완료
-                    </Button>
-                    <Button
-                      data-testid={`delete-order-${order.id}`}
-                      variant="destructive"
-                      size="xs"
-                      onClick={() => setConfirmAction({ type: 'delete', orderId: order.id })}
-                      className="ml-auto"
-                    >
-                      삭제
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                ))}
+              </div>
+              <div className="mt-3 flex gap-2">
+                <button
+                  data-testid={`status-pending-${order.id}`}
+                  onClick={() => onStatusChange(order.id, 'pending')}
+                  className="px-2 py-1 text-xs bg-yellow-100 rounded"
+                >
+                  주문접수
+                </button>
+                <button
+                  data-testid={`status-preparing-${order.id}`}
+                  onClick={() => onStatusChange(order.id, 'preparing')}
+                  className="px-2 py-1 text-xs bg-blue-100 rounded"
+                >
+                  조리중
+                </button>
+                <button
+                  data-testid={`status-completed-${order.id}`}
+                  onClick={() => onStatusChange(order.id, 'completed')}
+                  className="px-2 py-1 text-xs bg-green-100 rounded"
+                >
+                  완료
+                </button>
+                <button
+                  data-testid={`delete-order-${order.id}`}
+                  onClick={() => setConfirmAction({ type: 'delete', orderId: order.id })}
+                  className="px-2 py-1 text-xs bg-red-100 text-red-700 rounded ml-auto"
+                >
+                  삭제
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
 
-          <DialogFooter className="gap-2">
-            <Button variant="outline" onClick={onShowHistory}>과거 내역</Button>
-            <Button data-testid="complete-table" onClick={() => setConfirmAction({ type: 'complete' })}>
-              이용 완료
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        <div className="p-4 border-t flex justify-between">
+          <button onClick={onShowHistory} className="px-4 py-2 bg-gray-100 rounded">과거 내역</button>
+          <button
+            data-testid="complete-table"
+            onClick={() => setConfirmAction({ type: 'complete' })}
+            className="px-4 py-2 bg-blue-600 text-white rounded"
+          >
+            이용 완료
+          </button>
+        </div>
+      </div>
 
       {confirmAction && (
-        <Dialog open onOpenChange={() => setConfirmAction(null)}>
-          <DialogContent data-testid="confirm-dialog" className="max-w-sm">
-            <DialogHeader>
-              <DialogTitle>확인</DialogTitle>
-            </DialogHeader>
-            <p className="text-sm text-muted-foreground">
+        <div data-testid="confirm-dialog" className="fixed inset-0 bg-black/50 flex items-center justify-center z-60">
+          <div className="bg-white p-6 rounded-lg">
+            <p className="mb-4">
               {confirmAction.type === 'delete' ? '주문을 삭제하시겠습니까?' : '테이블 이용을 완료하시겠습니까?'}
             </p>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setConfirmAction(null)}>취소</Button>
-              <Button variant="destructive" onClick={handleConfirm}>확인</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+            <div className="flex gap-2 justify-end">
+              <button onClick={() => setConfirmAction(null)} className="px-4 py-2 bg-gray-100 rounded">취소</button>
+              <button onClick={handleConfirm} className="px-4 py-2 bg-red-600 text-white rounded">확인</button>
+            </div>
+          </div>
+        </div>
       )}
-    </>
+    </div>
   )
 }

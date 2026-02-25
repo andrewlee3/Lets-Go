@@ -1,8 +1,6 @@
 'use client'
 
 import { TableWithOrders } from '@/types'
-import { Card, CardContent } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
 
 interface TableCardProps {
   table: TableWithOrders
@@ -17,28 +15,25 @@ export default function TableCard({ table, onClick }: TableCardProps) {
   }
 
   return (
-    <Card
+    <div
       data-testid="table-card"
       onClick={onClick}
-      className={cn(
-        "cursor-pointer transition-all hover:shadow-md",
-        table.isDelayed && "bg-red-100 border-red-300 dark:bg-red-900/20"
-      )}
+      className={`p-4 rounded-lg shadow cursor-pointer transition-colors ${
+        table.isDelayed ? 'bg-red-100 border-red-300' : 'bg-white hover:bg-gray-50'
+      } border`}
     >
-      <CardContent className="pt-4">
-        <div className="flex justify-between items-center mb-2">
-          <span data-testid="table-card-number" className="text-2xl font-bold">
-            {table.table.tableNumber}번
-          </span>
-          <span className="text-sm text-muted-foreground">{table.orders.length}건</span>
-        </div>
-        <div data-testid="table-card-amount" className="text-lg font-semibold text-primary">
-          {formatAmount(table.totalAmount)}원
-        </div>
-        <div className="text-sm text-muted-foreground mt-1">
-          {formatTime(table.oldestOrderTime)}
-        </div>
-      </CardContent>
-    </Card>
+      <div className="flex justify-between items-center mb-2">
+        <span data-testid="table-card-number" className="text-xl font-bold">
+          {table.table.tableNumber}
+        </span>
+        <span className="text-sm text-gray-500">{table.orders.length}건</span>
+      </div>
+      <div data-testid="table-card-amount" className="text-lg font-semibold text-blue-600">
+        {formatAmount(table.totalAmount)}원
+      </div>
+      <div className="text-sm text-gray-500 mt-1">
+        {formatTime(table.oldestOrderTime)}
+      </div>
+    </div>
   )
 }

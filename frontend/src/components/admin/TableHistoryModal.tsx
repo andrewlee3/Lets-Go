@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react'
 import { PastSession } from '@/types'
 import { adminApi } from '@/api/admin'
 import { useAdminAuth } from '@/contexts/AdminAuthContext'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Card, CardContent } from '@/components/ui/card'
 
 interface TableHistoryModalProps {
   tableId: string
@@ -26,24 +24,25 @@ export default function TableHistoryModal({ tableId, onClose }: TableHistoryModa
   }, [token, tableId])
 
   return (
-    <Dialog open onOpenChange={onClose}>
-      <DialogContent data-testid="history-modal" className="max-w-lg max-h-[80vh] overflow-auto">
-        <DialogHeader>
-          <DialogTitle>과거 주문 내역</DialogTitle>
-        </DialogHeader>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div data-testid="history-modal" className="bg-white rounded-lg w-full max-w-lg max-h-[80vh] overflow-auto">
+        <div className="p-4 border-b flex justify-between items-center">
+          <h2 className="text-xl font-bold">과거 주문 내역</h2>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">✕</button>
+        </div>
 
-        {isLoading ? (
-          <p className="text-center text-muted-foreground py-4">로딩 중...</p>
-        ) : sessions.length === 0 ? (
-          <p className="text-center text-muted-foreground py-4">과거 내역이 없습니다.</p>
-        ) : (
-          <div className="space-y-3">
-            {sessions.map((session) => (
-              <Card key={session.sessionId} className="py-3">
-                <CardContent className="pt-0">
+        <div className="p-4">
+          {isLoading ? (
+            <p>로딩 중...</p>
+          ) : sessions.length === 0 ? (
+            <p className="text-gray-500">과거 내역이 없습니다.</p>
+          ) : (
+            <div className="space-y-4">
+              {sessions.map((session) => (
+                <div key={session.sessionId} className="border rounded p-3">
                   <div className="flex justify-between mb-2">
                     <span className="font-semibold">{session.totalAmount.toLocaleString()}원</span>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-sm text-gray-500">
                       {new Date(session.completedAt).toLocaleString('ko-KR')}
                     </span>
                   </div>
@@ -53,18 +52,18 @@ export default function TableHistoryModal({ tableId, onClose }: TableHistoryModa
                         {order.items.map((item, i) => (
                           <div key={i} className="flex justify-between">
                             <span>{item.menuName} x {item.quantity}</span>
-                            <span className="text-muted-foreground">{(item.unitPrice * item.quantity).toLocaleString()}원</span>
+                            <span>{(item.unitPrice * item.quantity).toLocaleString()}원</span>
                           </div>
                         ))}
                       </div>
                     ))}
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
-      </DialogContent>
-    </Dialog>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }
