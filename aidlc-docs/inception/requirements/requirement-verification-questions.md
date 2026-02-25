@@ -17,7 +17,7 @@ D) Go + Gin
 E) Java + Spring Boot  
 X) Other (아래 [Answer]: 태그 뒤에 직접 기술해주세요)
 
-[Answer]: 
+[Answer]: A
 
 ### Frontend Framework
 A) React + TypeScript  
@@ -26,7 +26,7 @@ C) Next.js (React SSR)
 D) Vanilla JavaScript (프레임워크 없음)  
 X) Other (아래 [Answer]: 태그 뒤에 직접 기술해주세요)
 
-[Answer]: 
+[Answer]: C
 
 ### Database
 A) PostgreSQL  
@@ -35,7 +35,7 @@ C) SQLite (개발/MVP용)
 D) MongoDB  
 X) Other (아래 [Answer]: 태그 뒤에 직접 기술해주세요)
 
-[Answer]: 
+[Answer]: C
 
 ---
 
@@ -47,7 +47,7 @@ C) Vercel/Netlify (Frontend) + Railway/Render (Backend)
 D) Kubernetes  
 X) Other (아래 [Answer]: 태그 뒤에 직접 기술해주세요)
 
-[Answer]: 
+[Answer]: B
 
 ---
 
@@ -56,7 +56,7 @@ X) Other (아래 [Answer]: 태그 뒤에 직접 기술해주세요)
 A) Monorepo (Frontend + Backend 한 저장소)  
 B) 분리된 저장소 (Frontend, Backend 각각)  
 
-[Answer]: 
+[Answer]: A
 
 ---
 
@@ -68,7 +68,7 @@ PRD에 JWT 16시간 세션이 명시되어 있습니다. 추가 확인:
 A) Access Token만 사용 (16시간 유효)  
 B) Access Token (15분) + Refresh Token (16시간) 조합  
 
-[Answer]: 
+[Answer]: A
 
 ---
 
@@ -79,7 +79,7 @@ B) 단위 테스트 + 통합 테스트
 C) 단위 테스트 + 통합 테스트 + E2E 테스트  
 D) 테스트 없음 (MVP 우선)  
 
-[Answer]: 
+[Answer]: C
 
 ---
 
@@ -89,7 +89,7 @@ A) OpenAPI/Swagger 자동 생성
 B) 수동 문서화 (Markdown)  
 C) 문서화 없음 (MVP 우선)  
 
-[Answer]: 
+[Answer]: A
 
 ---
 
