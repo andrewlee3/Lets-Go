@@ -21,6 +21,7 @@ This stage generates code for each unit of work through two integrated parts:
 - [ ] Read unit design artifacts from Unit Design Generation
 - [ ] Read unit story map to understand assigned stories
 - [ ] Identify unit dependencies and interfaces
+- [ ] **Load coding conventions** from `aidlc-docs/inception/application-design/coding-conventions.md` (if exists)
 - [ ] Validate unit is ready for code generation
 
 ## Step 2: Create Detailed Unit Code Generation Plan
@@ -198,6 +199,7 @@ This stage generates code for each unit of work through two integrated parts:
 - **NO HARDCODED LOGIC**: Only execute what's written in the unit plan
 - **FOLLOW PLAN EXACTLY**: Do not deviate from the step sequence
 - **UPDATE CHECKBOXES**: Mark [x] immediately after completing each step
+- **FOLLOW CODING CONVENTIONS**: If `coding-conventions.md` exists, strictly follow defined patterns (file structure, naming, DI pattern, response format, TODO tags)
 - **STORY TRACEABILITY**: Mark unit stories [x] when functionality is implemented
 - **RESPECT DEPENDENCIES**: Only implement when unit dependencies are satisfied
 

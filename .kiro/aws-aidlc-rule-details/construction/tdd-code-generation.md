@@ -24,6 +24,7 @@ This stage generates code using Test-Driven Development for each unit of work th
 - [ ] Read unit design artifacts (Functional Design, NFR Design, Infrastructure Design)
 - [ ] Read unit story map to understand assigned stories
 - [ ] Identify unit dependencies and interfaces
+- [ ] **Load coding conventions** from `aidlc-docs/inception/application-design/coding-conventions.md` (if exists)
 - [ ] Validate unit is ready for TDD code generation
 
 ## Step 2: Prepare TDD Code Generation Plan Context
@@ -394,6 +395,7 @@ After completing all methods in a layer:
 - **UPDATE CHECKBOXES**: Mark [x] immediately after completing each step
 - **STORY TRACEABILITY**: Mark unit stories [x] when functionality is implemented
 - **RESPECT DEPENDENCIES**: Only implement when unit dependencies are satisfied
+- **FOLLOW CODING CONVENTIONS**: If `coding-conventions.md` exists, strictly follow defined patterns (file structure, naming, DI pattern, response format, TODO tags)
 
 ### Warning Signs (Stop immediately and notify user)
 - 🚨 Attempting to write tests without contract skeleton
