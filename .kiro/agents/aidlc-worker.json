@@ -11,7 +11,15 @@
   "resources": [
     "file://.kiro/steering/**/*.md"
   ],
-  "hooks": {},
+  "hooks": {
+    "postToolUse": [
+      {
+        "matcher": "fs_write",
+        "command": ".kiro/hooks/consistency-check.sh",
+        "description": "Verify document consistency after writing to aidlc-docs/"
+      }
+    ]
+  },
   "toolsSettings": {},
   "useLegacyMcpJson": false,
   "model": "claude-opus-4.5"
