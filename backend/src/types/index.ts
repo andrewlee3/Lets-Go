@@ -36,7 +36,23 @@ export interface LoginAttempt {
   lastAttemptAt: Date;
 }
 
-// Order Types (BE-2 소유, BE-3 조회용)
+// ============ BE-2: Menu Types ============
+export interface Category {
+  id: string;
+  name: string;
+  order: number;
+}
+
+export interface Menu {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  imageUrl: string;
+  categoryId: string;
+}
+
+// ============ BE-2: Order Types ============
 export type OrderStatus = 'pending' | 'preparing' | 'completed';
 
 export interface OrderItem {
@@ -51,10 +67,24 @@ export interface Order {
   orderNumber: string;
   tableId: string;
   sessionId: string;
+  storeId: string;
   items: OrderItem[];
   totalAmount: number;
   status: OrderStatus;
   createdAt: string;
+}
+
+export interface CreateOrderItemDto {
+  menuId: string;
+  quantity: number;
+}
+
+export interface TableWithOrders {
+  table: { id: string; tableNumber: string };
+  orders: Order[];
+  totalAmount: number;
+  oldestOrderTime: string | null;
+  isDelayed: boolean;
 }
 
 // SSE Types
