@@ -6,10 +6,10 @@
 - **Started**: 2026-02-25T11:41:59+09:00
 
 ## Current Status
-- **Current Phase**: INCEPTION
-- **Current Stage**: Units Generation - COMPLETE
-- **Status**: Ready for CONSTRUCTION
-- **Next Action**: Unit별 병렬 Code Generation
+- **Current Phase**: CONSTRUCTION
+- **Current Stage**: Code Generation - BE-3 Complete
+- **Status**: BE-3 완료, BE-2/FE 대기
+- **Next Action**: BE-2 또는 FE Unit 진행
 
 ## Team
 - Backend 3명, Frontend 1명
@@ -26,13 +26,13 @@
 - [x] Application Design - COMPLETE ✅
 - [x] Units Generation - COMPLETE ✅
 
-### 🟢 CONSTRUCTION PHASE (준비됨)
-- [ ] BE-1: Auth + Shared Types
-- [ ] BE-2: Menu + Order
-- [ ] BE-3: Table + SSE
-- [ ] FE-1: Customer
-- [ ] FE-2: Admin
-- [ ] Build and Test
+### 🟢 CONSTRUCTION PHASE
+- [x] BE-1: Auth + Shared Types - COMPLETE ✅
+- [ ] BE-2: Menu + Order - NOT STARTED
+- [x] BE-3: Table + SSE - COMPLETE ✅
+- [ ] FE-1: Customer - NOT STARTED
+- [ ] FE-2: Admin - NOT STARTED
+- [ ] Build and Test - PENDING
 
 ## Key Artifacts
 | 문서 | 위치 | 상태 |
