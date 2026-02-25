@@ -39,6 +39,7 @@ User Stories 기반 주요 기능 영역:
 - [x] component-methods.md 생성
 - [x] services.md 생성
 - [x] component-dependency.md 생성
+- [x] api-contract.md 생성 (추가)
 
 ---
 

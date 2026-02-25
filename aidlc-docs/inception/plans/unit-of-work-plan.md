@@ -42,7 +42,7 @@ A) 레이어별 (Backend → Frontend Customer → Frontend Admin)
 B) 기능별 (인증 → 메뉴 → 주문 → 테이블관리)
 C) 사용자별 (공통 → 고객용 전체 → 관리자용 전체)
 
-[Answer]: 추천해줘 (우리팀은 PM1명, 백엔드 1명, QA 1명, FE는 1명인데 부재중-나중에 올수도 있음)
+[Answer]: 레이어별 (Backend / Frontend 병렬) - FE 개발자 합류로 계획 변경
 
 ### Q2. 개발 순서
 어떤 순서로 개발을 진행할까요?
@@ -51,7 +51,7 @@ A) Backend 먼저 완성 → Frontend 개발 (API 완성 후 UI)
 B) 기능 단위로 Backend+Frontend 함께 (수직 슬라이스)
 C) 핵심 플로우 먼저 (메뉴→장바구니→주문) → 나머지
 
-[Answer]: 위의 질문이랑 비슷한데, 위 답변에 따라 추천해줘
+[Answer]: API 명세 먼저 확정 → Backend/Frontend 병렬 개발
 
 ### Q3. 팀 구성 고려
 현재 팀 구성은?
@@ -60,7 +60,7 @@ A) 1인 개발 (순차 진행)
 B) 2-3인 (병렬 가능)
 C) 4인 이상 (완전 병렬)
 
-[Answer]: Q1에 팀구성 적어두었어
+[Answer]: B (PM 1, BE 1, FE 1, QA 1) - FE 합류 완료
 
 ---
 

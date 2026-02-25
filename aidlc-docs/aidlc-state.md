@@ -7,37 +7,49 @@
 
 ## Current Status
 - **Current Phase**: INCEPTION
-- **Current Stage**: Units Generation
-- **Status**: In Progress
-- **Next Action**: 작업 단위 분해
+- **Current Stage**: Units Generation - COMPLETE
+- **Status**: Ready for CONSTRUCTION
+- **Next Action**: Unit별 병렬 Code Generation
+
+## Team
+- Backend 3명, Frontend 1명
+- Backend 병렬 개발, Frontend 순차 개발
 
 ## Phase Progress
 
 ### 🔵 INCEPTION PHASE
 - [x] Workspace Detection - COMPLETE
 - [x] Reverse Engineering - SKIP (Greenfield)
-- [x] Requirements Analysis - COMPLETE ✅ (승인됨 2026-02-25)
-- [x] User Stories - SKIP (PRD 충분, 단일 개발자)
+- [x] Requirements Analysis - COMPLETE ✅
+- [x] User Stories - COMPLETE ✅ (14 Stories, 57 AC)
 - [x] Workflow Planning - COMPLETE
-- [x] User Stories - COMPLETE
-- [x] Application Design - COMPLETE ✅ (승인됨 2026-02-25)
-- [ ] Units Generation - EXECUTE
+- [x] Application Design - COMPLETE ✅
+- [x] Units Generation - COMPLETE ✅
 
-### 🟢 CONSTRUCTION PHASE
-- [ ] Functional Design - EXECUTE (per unit)
-- [ ] NFR Requirements - EXECUTE
-- [ ] NFR Design - SKIP (로컬 환경)
-- [ ] Infrastructure Design - SKIP (Docker Compose)
-- [ ] Code Generation - EXECUTE (per unit)
-- [ ] Build and Test - EXECUTE
+### 🟢 CONSTRUCTION PHASE (준비됨)
+- [ ] BE-1: Auth + Shared Types
+- [ ] BE-2: Menu + Order
+- [ ] BE-3: Table + SSE
+- [ ] FE-1: Customer
+- [ ] FE-2: Admin
+- [ ] Build and Test
 
-### 🟡 OPERATIONS PHASE
-- [ ] Operations - PLACEHOLDER
+## Key Artifacts
+| 문서 | 위치 | 상태 |
+|-----|------|------|
+| 요구사항 | `inception/requirements/requirements.md` | ✅ |
+| User Stories | `inception/user-stories/stories.md` | ✅ |
+| Personas | `inception/user-stories/personas.md` | ✅ |
+| Components | `inception/application-design/components.md` | ✅ |
+| Services | `inception/application-design/services.md` | ✅ |
+| API Contract | `inception/application-design/api-contract.md` | ✅ |
+| Backlog | `backlog.md` | ✅ |
 
-## Existing Artifacts
-- `requirements/table-order-requirements.md` - PRD 문서
-- `requirements/constraints.md` - 제약사항 문서
-
-## Notes
-- 기존 PRD 문서를 기반으로 개발 진행
-- Greenfield 프로젝트로 Reverse Engineering 단계 스킵
+## Key Decisions
+- 기술 스택: Node.js + Express, Next.js, SQLite
+- API 구조: 기능 중심 (/api/customer/*, /api/admin/*)
+- SSE: 관리자 + 고객 모두 적용
+- 인증: localStorage + Authorization Header
+- 상태 관리: React Context + useReducer
+- 장바구니: 테이블별 분리 (cart_{storeId}_{tableId})
+- SSE: useSSE hook (Provider 아님)
