@@ -10,6 +10,7 @@ export async function createOrder(request: CreateOrderRequest): Promise<Order> {
   const orderId = `ORD-${Date.now()}`;
   const order: Order = {
     id: orderId,
+    tableId: 'table-1', // Mock: 기본 테이블
     items: request.items,
     totalAmount: request.totalAmount,
     status: 'pending',

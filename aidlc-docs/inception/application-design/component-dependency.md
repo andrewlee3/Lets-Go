@@ -1,4 +1,4 @@
-# Component Dependencies
+주문# Component Dependencies
 
 **프로젝트**: 테이블오더 서비스  
 **생성일**: 2026-02-25

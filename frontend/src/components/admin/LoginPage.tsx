@@ -29,7 +29,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-96">
+      <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-96" suppressHydrationWarning>
         <h1 className="text-2xl font-bold mb-6 text-center">관리자 로그인</h1>
 
         {error && (
@@ -46,6 +46,7 @@ export default function LoginPage() {
           onChange={(e) => setStoreId(e.target.value)}
           className="w-full p-3 border rounded mb-4"
           required
+          suppressHydrationWarning
         />
         <input
           data-testid="login-username"
@@ -55,6 +56,7 @@ export default function LoginPage() {
           onChange={(e) => setUsername(e.target.value)}
           className="w-full p-3 border rounded mb-4"
           required
+          suppressHydrationWarning
         />
         <input
           data-testid="login-password"
@@ -64,6 +66,7 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
           className="w-full p-3 border rounded mb-4"
           required
+          suppressHydrationWarning
         />
         <button
           data-testid="login-submit"

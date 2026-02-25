@@ -16,42 +16,74 @@ export default function DashboardPage() {
   const [showHistory, setShowHistory] = useState(false)
 
   const handleStatusChange = async (orderId: string, status: OrderStatus) => {
-    if (token) {
-      await adminApi.updateOrderStatus(token, orderId, status)
+    // Mock: localStorage에서 주문 상태 변경
+    const ordersJson = localStorage.getItem('orders')
+    if (ordersJson) {
+      const orders: any[] = JSON.parse(ordersJson)
+      const updated = orders.map(o => o.id === orderId ? { ...o, status } : o)
+      localStorage.setItem('orders', JSON.stringify(updated))
     }
   }
 
   const handleDelete = async (orderId: string) => {
-    if (token) {
-      await adminApi.deleteOrder(token, orderId)
-      setSelectedTable(null)
+    // Mock: localStorage에서 주문 삭제
+    const ordersJson = localStorage.getItem('orders')
+    if (ordersJson) {
+      const orders: any[] = JSON.parse(ordersJson)
+      const filtered = orders.filter(o => o.id !== orderId)
+      localStorage.setItem('orders', JSON.stringify(filtered))
     }
+    setSelectedTable(null)
   }
 
   const handleComplete = async () => {
-    if (token && selectedTable) {
-      await adminApi.completeTable(token, selectedTable.table.id)
-      setSelectedTable(null)
+    // Mock: 테이블의 모든 주문 삭제
+    if (selectedTable) {
+      const ordersJson = localStorage.getItem('orders')
+      if (ordersJson) {
+        const orders: any[] = JSON.parse(ordersJson)
+        const filtered = orders.filter(o => o.tableId !== selectedTable.table.id)
+        localStorage.setItem('orders', JSON.stringify(filtered))
+      }
     }
+    setSelectedTable(null)
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-white shadow p-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">주문 관리</h1>
-        <button onClick={logout} className="text-gray-600 hover:text-gray-800">로그아웃</button>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <header className="bg-white shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">🍽️ 주문 관리 대시보드</h1>
+            <p className="text-sm text-gray-500 mt-1">실시간 테이블 주문 현황</p>
+          </div>
+          <button 
+            onClick={logout} 
+            className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors font-medium"
+          >
+            로그아웃
+          </button>
+        </div>
       </header>
 
-      <main className="p-4">
-        <div data-testid="dashboard-grid" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {tables.map((table) => (
-            <TableCard
-              key={table.table.id}
-              table={table}
-              onClick={() => setSelectedTable(table)}
-            />
-          ))}
-        </div>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {tables.length === 0 ? (
+          <div className="text-center py-16">
+            <div className="text-6xl mb-4">📋</div>
+            <p className="text-xl text-gray-600">현재 주문이 없습니다</p>
+            <p className="text-sm text-gray-500 mt-2">새로운 주문이 들어오면 여기에 표시됩니다</p>
+          </div>
+        ) : (
+          <div data-testid="dashboard-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {tables.map((table) => (
+              <TableCard
+                key={table.table.id}
+                table={table}
+                onClick={() => setSelectedTable(table)}
+              />
+            ))}
+          </div>
+        )}
       </main>
 
       {selectedTable && (

@@ -69,7 +69,7 @@ export default function TableSetupForm() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" suppressHydrationWarning>
             <div>
               <label htmlFor="storeId" className="block text-sm font-medium mb-1">
                 매장 식별자
