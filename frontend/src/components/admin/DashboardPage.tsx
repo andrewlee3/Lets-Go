@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAdminAuth } from '@/contexts/AdminAuthContext'
 import { useAdminSSE } from '@/hooks/useAdminSSE'
 import { adminApi } from '@/api/admin'
@@ -11,9 +11,21 @@ import TableHistoryModal from './TableHistoryModal'
 
 export default function DashboardPage() {
   const { token, logout } = useAdminAuth()
-  const { tables } = useAdminSSE(token)
+  const { tables, refresh } = useAdminSSE(token)
   const [selectedTable, setSelectedTable] = useState<TableWithOrders | null>(null)
   const [showHistory, setShowHistory] = useState(false)
+
+  // tables가 업데이트되면 selectedTable도 동기화
+  useEffect(() => {
+    if (selectedTable) {
+      const updated = tables.find(t => t.table.id === selectedTable.table.id)
+      if (updated) {
+        setSelectedTable(updated)
+      } else {
+        setSelectedTable(null) // 테이블이 사라졌으면 모달 닫기
+      }
+    }
+  }, [tables])
 
   const handleStatusChange = async (orderId: string, status: OrderStatus) => {
     // Mock: localStorage에서 주문 상태 변경
@@ -22,6 +34,7 @@ export default function DashboardPage() {
       const orders: any[] = JSON.parse(ordersJson)
       const updated = orders.map(o => o.id === orderId ? { ...o, status } : o)
       localStorage.setItem('orders', JSON.stringify(updated))
+      refresh() // 즉시 새로고침
     }
   }
 
@@ -32,8 +45,8 @@ export default function DashboardPage() {
       const orders: any[] = JSON.parse(ordersJson)
       const filtered = orders.filter(o => o.id !== orderId)
       localStorage.setItem('orders', JSON.stringify(filtered))
+      refresh() // 즉시 새로고침
     }
-    setSelectedTable(null)
   }
 
   const handleComplete = async () => {
@@ -44,6 +57,7 @@ export default function DashboardPage() {
         const orders: any[] = JSON.parse(ordersJson)
         const filtered = orders.filter(o => o.tableId !== selectedTable.table.id)
         localStorage.setItem('orders', JSON.stringify(filtered))
+        refresh() // 즉시 새로고침
       }
     }
     setSelectedTable(null)

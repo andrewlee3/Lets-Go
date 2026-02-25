@@ -7,6 +7,7 @@ export interface UseAdminSSEReturn {
   tables: TableWithOrders[]
   isConnected: boolean
   error: Error | null
+  refresh: () => void
 }
 
 export function useAdminSSE(token: string | null): UseAdminSSEReturn {
@@ -14,46 +15,45 @@ export function useAdminSSE(token: string | null): UseAdminSSEReturn {
   const [isConnected, setIsConnected] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 
+  const loadOrders = useCallback(() => {
+    const ordersJson = localStorage.getItem('orders')
+    if (!ordersJson) {
+      setTables([])
+      return
+    }
+
+    const orders: Order[] = JSON.parse(ordersJson)
+    
+    // 테이블별로 그룹화
+    const tableMap = new Map<string, TableWithOrders>()
+    
+    orders.forEach(order => {
+      const tableId = order.tableId || 'table-1'
+      const tableNumber = tableId.replace('table-', '')
+      
+      if (!tableMap.has(tableId)) {
+        tableMap.set(tableId, {
+          table: {
+            id: tableId,
+            tableNumber,
+            storeId: 'store1',
+            currentSessionId: 'session-1',
+          },
+          orders: [],
+          totalAmount: 0,
+        })
+      }
+      
+      const tableData = tableMap.get(tableId)!
+      tableData.orders.push(order)
+      tableData.totalAmount += order.totalAmount
+    })
+    
+    setTables(Array.from(tableMap.values()))
+  }, [])
+
   useEffect(() => {
     if (!token) return
-
-    // Mock: localStorage에서 주문 로드
-    const loadOrders = () => {
-      const ordersJson = localStorage.getItem('orders')
-      if (!ordersJson) {
-        setTables([])
-        return
-      }
-
-      const orders: Order[] = JSON.parse(ordersJson)
-      
-      // 테이블별로 그룹화
-      const tableMap = new Map<string, TableWithOrders>()
-      
-      orders.forEach(order => {
-        const tableId = order.tableId || 'table-1'
-        const tableNumber = tableId.replace('table-', '')
-        
-        if (!tableMap.has(tableId)) {
-          tableMap.set(tableId, {
-            table: {
-              id: tableId,
-              tableNumber,
-              storeId: 'store1',
-              currentSessionId: 'session-1',
-            },
-            orders: [],
-            totalAmount: 0,
-          })
-        }
-        
-        const tableData = tableMap.get(tableId)!
-        tableData.orders.push(order)
-        tableData.totalAmount += order.totalAmount
-      })
-      
-      setTables(Array.from(tableMap.values()))
-    }
 
     loadOrders()
 
@@ -61,7 +61,7 @@ export function useAdminSSE(token: string | null): UseAdminSSEReturn {
     const interval = setInterval(loadOrders, 2000)
 
     return () => clearInterval(interval)
-  }, [token])
+  }, [token, loadOrders])
 
-  return { tables, isConnected, error }
+  return { tables, isConnected, error, refresh: loadOrders }
 }
