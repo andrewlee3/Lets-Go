@@ -22,6 +22,7 @@ This stage generates code for each unit of work through two integrated parts:
 - [ ] Read unit story map to understand assigned stories
 - [ ] Identify unit dependencies and interfaces
 - [ ] **Load coding conventions** from `aidlc-docs/inception/application-design/coding-conventions.md` (if exists)
+- [ ] **Load branch strategy** from `aidlc-docs/inception/plans/branch-strategy.md` (if exists)
 - [ ] Validate unit is ready for code generation
 
 ## Step 2: Create Detailed Unit Code Generation Plan

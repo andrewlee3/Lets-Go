@@ -25,6 +25,7 @@ This stage generates code using Test-Driven Development for each unit of work th
 - [ ] Read unit story map to understand assigned stories
 - [ ] Identify unit dependencies and interfaces
 - [ ] **Load coding conventions** from `aidlc-docs/inception/application-design/coding-conventions.md` (if exists)
+- [ ] **Load branch strategy** from `aidlc-docs/inception/plans/branch-strategy.md` (if exists)
 - [ ] Validate unit is ready for TDD code generation
 
 ## Step 2: Prepare TDD Code Generation Plan Context
