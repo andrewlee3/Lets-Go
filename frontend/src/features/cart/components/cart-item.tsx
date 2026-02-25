@@ -35,6 +35,13 @@ export default function CartItemComponent({
             src={item.imageUrl}
             alt={item.menuName}
             className="w-full h-full object-cover"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+              const parent = e.currentTarget.parentElement;
+              if (parent) {
+                parent.innerHTML = '<div class="flex items-center justify-center h-full"><span class="text-2xl opacity-40">☕</span></div>';
+              }
+            }}
           />
         ) : (
           <div className="flex items-center justify-center h-full">
