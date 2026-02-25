@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Latte - 프리미엄 카페</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #f7f3f0 100%);
+            color: #2c2c2c;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 24px 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(139, 90, 43, 0.1);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #8b5a2b;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 36px;
+        }
+
+        .nav-buttons button {
+            background: linear-gradient(135deg, #8b5a2b 0%, #a67c52 100%);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            margin-left: 12px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(139, 90, 43, 0.2);
+        }
+
+        .nav-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 90, 43, 0.3);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 70px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(139, 90, 43, 0.05) 0%, rgba(166, 124, 82, 0.05) 100%);
+            border-radius: 30px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 52px;
+            margin-bottom: 16px;
+            color: #8b5a2b;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #6b4423;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .treatments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+
+        .treatment-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .treatment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 90, 43, 0.05) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+
+        .treatment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 50px rgba(139, 90, 43, 0.15);
+        }
+
+        .treatment-card:hover::before {
+            opacity: 1;
+        }
+
+        .treatment-image {
+            width: 100%;
+            height: 240px;
+            background: linear-gradient(135deg, #d4a574 0%, #8b5a2b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .treatment-image::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translate(-25%, -25%); }
+            50% { transform: translate(25%, 25%); }
+        }
+
+        .treatment-card:nth-child(1) .treatment-image {
+            background: linear-gradient(135deg, #c7956d 0%, #8b5a2b 100%);
+        }
+
+        .treatment-card:nth-child(2) .treatment-image {
+            background: linear-gradient(135deg, #a67c52 0%, #6b4423 100%);
+        }
+
+        .treatment-card:nth-child(3) .treatment-image {
+            background: linear-gradient(135deg, #d4a574 0%, #a67c52 100%);
+        }
+
+        .treatment-card:nth-child(4) .treatment-image {
+            background: linear-gradient(135deg, #8b5a2b 0%, #5d3a1a 100%);
+        }
+
+        .treatment-card:nth-child(5) .treatment-image {
+            background: linear-gradient(135deg, #b8956a 0%, #8b5a2b 100%);
+        }
+
+        .treatment-card:nth-child(6) .treatment-image {
+            background: linear-gradient(135deg, #d4a574 0%, #c7956d 100%);
+        }
+
+        .treatment-info {
+            padding: 28px;
+        }
+
+        .treatment-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #2c2c2c;
+            letter-spacing: 0.5px;
+        }
+
+        .treatment-desc {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .treatment-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(139, 90, 43, 0.1);
+        }
+
+        .treatment-price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #8b5a2b;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .treatment-duration {
+            font-size: 14px;
+            color: #999;
+            font-weight: 300;
+        }
+
+        .book-button {
+            background: linear-gradient(135deg, #8b5a2b 0%, #a67c52 100%);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 16px;
+            box-shadow: 0 4px 15px rgba(139, 90, 43, 0.2);
+        }
+
+        .book-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 90, 43, 0.3);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #00c7ae;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .time-slot {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .time-slot:hover {
+            border-color: #00c7ae;
+            background: #f0fffe;
+        }
+
+        .time-slot.selected {
+            background: #00c7ae;
+            color: white;
+            border-color: #00c7ae;
+        }
+
+        .submit-button {
+            background: #00c7ae;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 24px;
+        }
+
+        .submit-button:hover {
+            background: #00b39a;
+        }
+
+        .my-appointments {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 40px;
+        }
+
+        .appointments-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .appointment-item {
+            padding: 16px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .appointment-info h3 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .appointment-info p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-confirmed {
+            background: #e8f8f5;
+            color: #00c7ae;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .treatments-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .time-slots {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">💆 뷰티클리닉</div>
+            <div class="nav-buttons">
+                <button onclick="scrollToAppointments()">내 예약</button>
+                <button>로그인</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>피부과 시술 예약</h1>
+            <p>전문적인 피부 관리, 간편한 온라인 예약</p>
+        </div>
+
+        <div class="treatments-grid">
+            <div class="treatment-card" onclick="openBookingModal('레이저 토닝', '150,000원', '30분')">
+                <div class="treatment-image">✨</div>
+                <div class="treatment-info">
+                    <div class="treatment-name">레이저 토닝</div>
+                    <div class="treatment-desc">피부 톤을 균일하게 개선하고 잡티를 제거하는 시술입니다.</div>
+                    <div class="treatment-meta">
+                        <div>
+                            <div class="treatment-price">150,000원</div>
+                            <div class="treatment-duration">⏱ 30분 소요</div>
+                        </div>
+                    </div>
+                    <button class="book-button">예약하기</button>
+                </div>
+            </div>
+
+            <div class="treatment-card" onclick="openBookingModal('보톡스', '200,000원', '20분')">
+                <div class="treatment-image">💉</div>
+                <div class="treatment-info">
+                    <div class="treatment-name">보톡스</div>
+                    <div class="treatment-desc">주름 개선 및 예방을 위한 보톡스 시술입니다.</div>
+                    <div class="treatment-meta">
+                        <div>
+                            <div class="treatment-price">200,000원</div>
+                            <div class="treatment-duration">⏱ 20분 소요</div>
+                        </div>
+                    </div>
+                    <button class="book-button">예약하기</button>
+                </div>
+            </div>
+
+            <div class="treatment-card" onclick="openBookingModal('필러', '350,000원', '40분')">
+                <div class="treatment-image">💧</div>
+                <div class="treatment-info">
+                    <div class="treatment-name">필러</div>
+                    <div class="treatment-desc">볼륨 개선 및 윤곽 교정을 위한 필러 시술입니다.</div>
+                    <div class="treatment-meta">
+                        <div>
+                            <div class="treatment-price">350,000원</div>
+                            <div class="treatment-duration">⏱ 40분 소요</div>
+                        </div>
+                    </div>
+                    <button class="book-button">예약하기</button>
+                </div>
+            </div>
+
+            <div class="treatment-card" onclick="openBookingModal('여드름 치료', '120,000원', '45분')">
+                <div class="treatment-image">🌟</div>
+                <div class="treatment-info">
+                    <div class="treatment-name">여드름 치료</div>
+                    <div class="treatment-desc">여드름 및 흉터 개선을 위한 전문 치료입니다.</div>
+                    <div class="treatment-meta">
+                        <div>
+                            <div class="treatment-price">120,000원</div>
+                            <div class="treatment-duration">⏱ 45분 소요</div>
+                        </div>
+                    </div>
+                    <button class="book-button">예약하기</button>
+                </div>
+            </div>
+
+            <div class="treatment-card" onclick="openBookingModal('리프팅 레이저', '280,000원', '50분')">
+                <div class="treatment-image">⚡</div>
+                <div class="treatment-info">
+                    <div class="treatment-name">리프팅 레이저</div>
+                    <div class="treatment-desc">피부 탄력 개선 및 리프팅 효과를 위한 시술입니다.</div>
+                    <div class="treatment-meta">
+                        <div>
+                            <div class="treatment-price">280,000원</div>
+                            <div class="treatment-duration">⏱ 50분 소요</div>
+                        </div>
+                    </div>
+                    <button class="book-button">예약하기</button>
+                </div>
+            </div>
+
+            <div class="treatment-card" onclick="openBookingModal('미백 관리', '180,000원', '60분')">
+                <div class="treatment-image">🌸</div>
+                <div class="treatment-info">
+                    <div class="treatment-name">미백 관리</div>
+                    <div class="treatment-desc">피부 톤 개선 및 미백 효과를 위한 종합 관리입니다.</div>
+                    <div class="treatment-meta">
+                        <div>
+                            <div class="treatment-price">180,000원</div>
+                            <div class="treatment-duration">⏱ 60분 소요</div>
+                        </div>
+                    </div>
+                    <button class="book-button">예약하기</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="my-appointments" id="appointments">
+            <h2 class="appointments-title">내 예약 내역</h2>
+            <div id="appointmentsList">
+                <div class="appointment-item">
+                    <div class="appointment-info">
+                        <h3>레이저 토닝</h3>
+                        <p>📅 2026년 2월 28일 (금) 14:00</p>
+                        <p>💰 150,000원</p>
+                    </div>
+                    <span class="status-badge status-confirmed">예약 확정</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">시술 예약</h2>
+                <button class="close-button" onclick="closeBookingModal()">&times;</button>
+            </div>
+
+            <form onsubmit="submitBooking(event)">
+                <div class="form-group">
+                    <label class="form-label">시술명</label>
+                    <input type="text" class="form-input" id="treatmentName" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">가격</label>
+                    <input type="text" class="form-input" id="treatmentPrice" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">예약 날짜</label>
+                    <input type="date" class="form-input" id="appointmentDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">예약 시간</label>
+                    <div class="time-slots">
+                        <div class="time-slot" onclick="selectTime(this, '10:00')">10:00</div>
+                        <div class="time-slot" onclick="selectTime(this, '11:00')">11:00</div>
+                        <div class="time-slot" onclick="selectTime(this, '12:00')">12:00</div>
+                        <div class="time-slot" onclick="selectTime(this, '14:00')">14:00</div>
+                        <div class="time-slot" onclick="selectTime(this, '15:00')">15:00</div>
+                        <div class="time-slot" onclick="selectTime(this, '16:00')">16:00</div>
+                        <div class="time-slot" onclick="selectTime(this, '17:00')">17:00</div>
+                        <div class="time-slot" onclick="selectTime(this, '18:00')">18:00</div>
+                    </div>
+                    <input type="hidden" id="selectedTime" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">이름</label>
+                    <input type="text" class="form-input" id="customerName" placeholder="홍길동" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">연락처</label>
+                    <input type="tel" class="form-input" id="customerPhone" placeholder="010-1234-5678" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">특이사항 (선택)</label>
+                    <textarea class="form-input" id="notes" rows="3" placeholder="알레르기나 특별히 고려해야 할 사항이 있으면 적어주세요"></textarea>
+                </div>
+
+                <button type="submit" class="submit-button">예약 완료</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let selectedTimeValue = '';
+
+        function openBookingModal(name, price, duration) {
+            document.getElementById('treatmentName').value = name;
+            document.getElementById('treatmentPrice').value = price;
+            document.getElementById('bookingModal').classList.add('active');
+            
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('appointmentDate').setAttribute('min', today);
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+            document.getElementById('selectedTime').value = '';
+            selectedTimeValue = '';
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+        }
+
+        function selectTime(element, time) {
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            document.getElementById('selectedTime').value = time;
+            selectedTimeValue = time;
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+            
+            const treatment = document.getElementById('treatmentName').value;
+            const date = document.getElementById('appointmentDate').value;
+            const time = document.getElementById('selectedTime').value;
+            const name = document.getElementById('customerName').value;
+            const phone = document.getElementById('customerPhone').value;
+            const price = document.getElementById('treatmentPrice').value;
+
+            if (!time) {
+                alert('예약 시간을 선택해주세요.');
+                return;
+            }
+
+            // Add to appointments list
+            const appointmentsList = document.getElementById('appointmentsList');
+            const newAppointment = document.createElement('div');
+            newAppointment.className = 'appointment-item';
+            
+            const dateObj = new Date(date);
+            const dateStr = `${dateObj.getFullYear()}년 ${dateObj.getMonth() + 1}월 ${dateObj.getDate()}일`;
+            const days = ['일', '월', '화', '수', '목', '금', '토'];
+            const dayStr = days[dateObj.getDay()];
+            
+            newAppointment.innerHTML = `
+                <div class="appointment-info">
+                    <h3>${treatment}</h3>
+                    <p>📅 ${dateStr} (${dayStr}) ${time}</p>
+                    <p>💰 ${price}</p>
+                </div>
+                <span class="status-badge status-confirmed">예약 확정</span>
+            `;
+            
+            appointmentsList.appendChild(newAppointment);
+
+            alert(`예약이 완료되었습니다!\n\n시술: ${treatment}\n날짜: ${dateStr} (${dayStr}) ${time}\n이름: ${name}\n연락처: ${phone}`);
+            
+            closeBookingModal();
+            event.target.reset();
+        }
+
+        function scrollToAppointments() {
+            document.getElementById('appointments').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('bookingModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBookingModal();
+            }
+        });
+    </script>
+</body>
+</html>
