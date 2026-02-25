@@ -9,7 +9,7 @@ interface CartSummaryProps {
 
 export default function CartSummary({ totalAmount, totalItems }: CartSummaryProps) {
   return (
-    <div className="border-t border-border/20 bg-[#e8dfd0]/20 backdrop-blur-sm p-6 mx-4 rounded-t-xl">
+    <div className="bg-[#e8dfd0]/20 backdrop-blur-sm p-6 mx-6 mb-4 rounded-xl">
       <div className="mb-3 flex justify-between text-base">
         <span className="text-muted-foreground font-medium">총 {totalItems}개</span>
       </div>

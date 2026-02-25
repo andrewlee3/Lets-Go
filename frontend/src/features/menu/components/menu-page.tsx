@@ -75,9 +75,9 @@ export default function MenuPage() {
   }
 
   return (
-    <div className="flex h-screen flex-col bg-background">
+    <div className="flex h-screen flex-col bg-gradient-to-br from-[#faf8f5] via-[#f5f1eb] to-[#f0ebe3]">
       {/* 헤더 */}
-      <header className="border-b border-border/30 bg-white/80 backdrop-blur-sm px-6 py-4 shadow-soft">
+      <header className="bg-white/60 backdrop-blur-md px-6 py-4 shadow-soft">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-primary flex items-center gap-2">
@@ -114,7 +114,7 @@ export default function MenuPage() {
       </div>
 
       {/* 장바구니 버튼 (하단 고정) */}
-      <div className="border-t border-border/20 bg-white/95 backdrop-blur-sm p-4 shadow-soft-lg">
+      <div className="bg-white/60 backdrop-blur-md p-4 shadow-soft-lg">
         <CartDrawer>
           <Button className="w-full btn-touch bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-soft transition-all hover:shadow-soft-lg">
             🛒 장바구니 {totalItems > 0 && `(${totalItems}개)`}

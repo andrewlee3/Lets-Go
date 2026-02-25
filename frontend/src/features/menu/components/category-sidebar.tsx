@@ -14,7 +14,7 @@ export default function CategorySidebar({
   onSelectCategory,
 }: CategorySidebarProps) {
   return (
-    <aside className="w-28 border-r border-border/20 bg-white/50 backdrop-blur-sm">
+    <aside className="w-28 bg-white/40 backdrop-blur-md">
       <nav className="flex flex-col gap-3 p-3">
         <button
           onClick={() => onSelectCategory(null)}

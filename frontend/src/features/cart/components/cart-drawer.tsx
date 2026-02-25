@@ -35,8 +35,8 @@ export default function CartDrawer({ children }: CartDrawerProps) {
   return (
     <Drawer>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="bg-background">
-        <DrawerHeader className="border-b border-border/20">
+      <DrawerContent className="bg-white">
+        <DrawerHeader className="px-6 py-5">
           <DrawerTitle className="text-2xl font-bold text-primary flex items-center gap-2">
             🛒 장바구니
           </DrawerTitle>
@@ -45,7 +45,7 @@ export default function CartDrawer({ children }: CartDrawerProps) {
           </DrawerDescription>
         </DrawerHeader>
 
-        <div className="max-h-[60vh] overflow-y-auto px-4 py-4">
+        <div className="max-h-[60vh] overflow-y-auto px-6 py-4">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-32 text-muted-foreground">
               <div className="text-5xl mb-3 opacity-30">🛒</div>
@@ -67,7 +67,7 @@ export default function CartDrawer({ children }: CartDrawerProps) {
 
         <CartSummary totalAmount={totalAmount} totalItems={totalItems} />
 
-        <DrawerFooter className="border-t border-border/20 bg-white/50 backdrop-blur-sm">
+        <DrawerFooter className="bg-white/50 backdrop-blur-sm px-6 py-5">
           <Button
             onClick={handleOrder}
             disabled={items.length === 0}
@@ -80,12 +80,12 @@ export default function CartDrawer({ children }: CartDrawerProps) {
               variant="outline"
               onClick={clearCart}
               disabled={items.length === 0}
-              className="flex-1 border-primary/20 text-primary hover:bg-primary/5"
+              className="flex-1 border-0 bg-[#f5f1eb] text-primary hover:bg-[#e8dfd0]"
             >
               전체 삭제
             </Button>
             <DrawerClose asChild>
-              <Button variant="outline" className="flex-1 border-primary/20 text-primary hover:bg-primary/5">
+              <Button variant="outline" className="flex-1 border-0 bg-[#f5f1eb] text-primary hover:bg-[#e8dfd0]">
                 닫기
               </Button>
             </DrawerClose>

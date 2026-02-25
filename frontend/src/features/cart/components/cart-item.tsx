@@ -29,8 +29,18 @@ export default function CartItemComponent({
 
   return (
     <div className="flex items-center gap-4 bg-white rounded-xl p-4 shadow-soft">
-      <div className="h-16 w-16 flex-shrink-0 rounded-lg bg-gradient-to-br from-[#e8dfd0] to-[#f9f6f0] flex items-center justify-center">
-        <span className="text-2xl opacity-40">☕</span>
+      <div className="h-16 w-16 flex-shrink-0 rounded-lg bg-gradient-to-br from-[#e8dfd0] to-[#f9f6f0] overflow-hidden">
+        {item.imageUrl ? (
+          <img
+            src={item.imageUrl}
+            alt={item.menuName}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="flex items-center justify-center h-full">
+            <span className="text-2xl opacity-40">☕</span>
+          </div>
+        )}
       </div>
       
       <div className="flex-1 min-w-0">
