@@ -7,9 +7,9 @@
 
 ## Current Status
 - **Current Phase**: CONSTRUCTION
-- **Current Stage**: Code Generation - BE-3 Complete
-- **Status**: BE-3 완료, BE-2/FE 대기
-- **Next Action**: BE-2 또는 FE Unit 진행
+- **Current Stage**: Code Generation - FE-2 Complete
+- **Status**: FE-2 Admin UI 완료
+- **Next Action**: FE-1 Customer UI 또는 Build & Test
 
 ## Team
 - Backend 3명, Frontend 1명
@@ -31,7 +31,7 @@
 - [ ] BE-2: Menu + Order - NOT STARTED
 - [x] BE-3: Table + SSE - COMPLETE ✅
 - [ ] FE-1: Customer - NOT STARTED
-- [ ] FE-2: Admin - NOT STARTED
+- [x] FE-2: Admin - COMPLETE ✅ (TDD, 29 tests)
 - [ ] Build and Test - PENDING
 
 ## Key Artifacts
