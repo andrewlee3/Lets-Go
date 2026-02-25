@@ -209,3 +209,105 @@
 - CONSTRUCTION PHASE 준비 완료
 
 ---
+
+## BE-3 Code Generation 시작
+**Timestamp**: 2026-02-25T16:12:52+09:00
+**User Input**: "BE-3 Unit의 Code Generation을 시작해줘.
+
+담당: Table + SSE API
+- TableController, TableService
+- SSEController, SSEService
+- 실시간 이벤트 브로드캐스트
+
+Auth는 TODO 주석으로 처리:
+// TODO: [AUTH] 인증 미들웨어 적용 필요
+
+참고 문서:
+- aidlc-docs/inception/application-design/coding-conventions.md
+- aidlc-docs/inception/application-design/api-contract.md
+- aidlc-docs/inception/application-design/unit-of-work.md"
+**AI Response**: TDD 접근 방식 선택 질문 제시
+**Context**: BE-3 Unit Code Generation 시작, TDD vs Standard 선택 요청
+
+---
+
+## BE-3 TDD 선택
+**Timestamp**: 2026-02-25T16:13:43+09:00
+**User Input**: "A"
+**AI Response**: TDD 방식 선택됨, TDD Planning 시작
+**Context**: TDD (Test-Driven Development) 방식으로 BE-3 Unit 개발 진행
+
+---
+
+## BE-3 TDD Planning 완료
+**Timestamp**: 2026-02-25T16:14:00+09:00
+**AI Response**: TDD Planning 문서 3개 생성 완료
+**Context**: 
+- be-3-contracts.md: Contract/Interface 정의
+- be-3-test-plan.md: 21개 테스트 케이스
+- be-3-tdd-code-generation-plan.md: 5단계 TDD 실행 계획
+- Stories: US-2.2, US-2.3, US-3.2, US-3.3
+
+---
+
+## BE-3 TDD Plan 승인 요청
+**Timestamp**: 2026-02-25T16:14:30+09:00
+**AI Response**: TDD Plan 승인 요청 메시지 제시
+**Context**: 3개 TDD Plan 파일 검토 및 승인 요청
+
+---
+
+## BE-3 TDD Plan 승인
+**Timestamp**: 2026-02-25T16:21:54+09:00
+**User Input**: "시작해줘"
+**AI Response**: TDD Plan 승인됨, TDD Generation 시작
+**Context**: 
+- 3개 TDD Plan 문서 승인
+- 23개 테스트 케이스
+- 5개 Story Coverage (US-2.2, US-2.3, US-3.1, US-3.2, US-3.3)
+
+---
+
+## BE-3 TDD Generation 완료
+**Timestamp**: 2026-02-25T16:30:00+09:00
+**AI Response**: BE-3 TDD Code Generation 완료
+**Context**: 
+- 전체 23개 테스트 통과
+- 5개 Story 구현 완료 (US-2.2, US-2.3, US-3.1, US-3.2, US-3.3)
+- 생성 파일: 13개 소스, 6개 테스트
+- TODO: [AUTH] 4개 엔드포인트에 인증 미들웨어 적용 필요 (BE-1 완료 후)
+
+---
+
+## BE-3 Auth 통합 완료
+**Timestamp**: 2026-02-25T16:35:00+09:00
+**User Input**: "BE-1작업이 완료되서 remote에 push되어 있는데 해당 작업을 pull받아서 auth부분을 완료해줄 수 잇어? 공통 라이브러리도 BE-1의 작업으로 마이그레이션 해줘"
+**AI Response**: BE-1 pull 후 BE-3 코드 마이그레이션 및 Auth 통합 완료
+**Context**: 
+- apps/backend/ 삭제, backend/ 폴더로 통합
+- Auth 미들웨어 생성 및 적용
+- TODO: [AUTH] 주석 제거, 실제 인증 적용
+- 전체 41개 테스트 통과
+
+### 마이그레이션 내용
+- `backend/src/types/index.ts` - BE-3 타입 추가 (PastSession, Order, SSE)
+- `backend/src/middlewares/auth.middleware.ts` - Auth 미들웨어 생성
+- `backend/src/repositories/table.repository.ts` - TableRepository 생성
+- `backend/src/repositories/session.repository.ts` - SessionRepository 생성
+- `backend/src/services/table.service.ts` - TableService 생성
+- `backend/src/services/sse.service.ts` - SSEService 생성
+- `backend/src/controllers/table.controller.ts` - TableController 생성
+- `backend/src/controllers/sse.controller.ts` - SSEController 생성
+- `backend/src/routes/table.routes.ts` - Table Routes 생성
+- `backend/src/routes/sse.routes.ts` - SSE Routes 생성
+- `backend/src/routes/index.ts` - 라우트 통합 (Auth 미들웨어 적용)
+
+### Auth 적용 현황
+| 엔드포인트 | 인증 | 권한 |
+|-----------|------|------|
+| POST /api/admin/tables/:id/complete | ✅ | Admin only |
+| GET /api/admin/tables/:id/history | ✅ | Admin only |
+| GET /api/customer/sse/orders | ✅ | Table token |
+| GET /api/admin/sse/orders | ✅ | Admin token |
+
+---

@@ -17,7 +17,7 @@ const authService = new AuthService(authRepo);
 const authController = new AuthController(authService);
 
 // Create app
-const app = createApp(authController);
+const app = createApp(authController, authService);
 
 // Start server
 const PORT = process.env.PORT || 3000;

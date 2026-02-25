@@ -3,8 +3,9 @@ import cors from 'cors';
 import { createRoutes } from './routes';
 import { errorHandler } from './middlewares/error.middleware';
 import { AuthController } from './controllers/auth.controller';
+import { AuthService } from './services/auth.service';
 
-export const createApp = (authController: AuthController): Express => {
+export const createApp = (authController: AuthController, authService: AuthService): Express => {
   const app = express();
 
   // Middlewares
@@ -12,7 +13,7 @@ export const createApp = (authController: AuthController): Express => {
   app.use(express.json());
 
   // Routes
-  app.use(createRoutes(authController));
+  app.use(createRoutes(authController, authService));
 
   // Error handler
   app.use(errorHandler);

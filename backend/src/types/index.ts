@@ -23,11 +23,50 @@ export interface Session {
   completedAt: Date | null;
 }
 
+export interface PastSession {
+  sessionId: string;
+  orders: Order[];
+  totalAmount: number;
+  completedAt: string;
+}
+
 export interface LoginAttempt {
   identifier: string;
   attempts: number;
   lastAttemptAt: Date;
 }
+
+// Order Types (BE-2 소유, BE-3 조회용)
+export type OrderStatus = 'pending' | 'preparing' | 'completed';
+
+export interface OrderItem {
+  menuId: string;
+  menuName: string;
+  quantity: number;
+  unitPrice: number;
+}
+
+export interface Order {
+  id: string;
+  orderNumber: string;
+  tableId: string;
+  sessionId: string;
+  items: OrderItem[];
+  totalAmount: number;
+  status: OrderStatus;
+  createdAt: string;
+}
+
+// SSE Types
+export interface SSEClient {
+  id: string;
+  type: 'customer' | 'admin';
+  storeId: string;
+  sessionId?: string;
+  response: import('express').Response;
+}
+
+export type SSEEventType = 'new_order' | 'order_status' | 'order_deleted';
 
 // Auth DTOs
 export interface AdminLoginDto {
@@ -59,6 +98,7 @@ export interface TokenPayload {
   tableId?: string;
   storeId: string;
   type: 'admin' | 'table';
+  sessionId?: string;
   iat?: number;
   exp?: number;
 }

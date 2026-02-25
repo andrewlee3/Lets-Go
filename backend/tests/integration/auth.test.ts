@@ -24,7 +24,7 @@ describe('Auth Integration Tests', () => {
     authRepo = new AuthRepository();
     authService = new AuthService(authRepo);
     authController = new AuthController(authService);
-    app = createApp(authController);
+    app = createApp(authController, authService);
   });
 
   beforeEach(() => {

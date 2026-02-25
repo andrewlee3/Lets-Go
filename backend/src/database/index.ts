@@ -5,6 +5,7 @@ interface Database {
   adminUsers: Map<string, any>;
   tables: Map<string, any>;
   sessions: Map<string, any>;
+  orders: Map<string, any>;
   loginAttempts: Map<string, any>;
 }
 
@@ -12,6 +13,7 @@ export const db: Database = {
   adminUsers: new Map(),
   tables: new Map(),
   sessions: new Map(),
+  orders: new Map(),
   loginAttempts: new Map(),
 };
 
