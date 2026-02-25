@@ -2,7 +2,16 @@
 
 **프로젝트**: 테이블오더 서비스  
 **생성일**: 2026-02-25  
-**팀 구성**: Backend 3명, Frontend 1명
+**최종 수정**: 2026-02-25  
+**팀 구성**: BE 3명, FE 1명 (총 4명 병렬 개발)
+
+---
+
+## 개발 전략
+
+**Phase 1**: 4명 완전 병렬 개발 (TODO 주석으로 의존성 처리)  
+**Phase 2**: 통합 (Shared Types 추출, Auth 적용, FE↔BE 연동)  
+**Phase 3**: 통합 테스트
 
 ---
 
@@ -10,28 +19,27 @@
 
 ### Backend Units (3명 병렬)
 
-| Unit | 담당 | 내용 | 예상 시간 |
-|------|-----|------|----------|
-| BE-1 | BE 개발자 1 | Auth + Shared Types | 1일 |
-| BE-2 | BE 개발자 2 | Menu + Order | 1.5일 |
-| BE-3 | BE 개발자 3 | Table + SSE | 1일 |
+| Unit | 담당자 | 내용 | 예상 시간 |
+|------|-------|------|----------|
+| BE-1 | 개발자 A | Auth 모듈 | 1일 |
+| BE-2 | 개발자 B | Menu + Order | 1.5일 |
+| BE-3 | 개발자 C | Table + SSE | 1일 |
 
-### Frontend Units (1명 순차)
+### Frontend Units (1명, FE-1/FE-2 병렬 진행)
 
-| Unit | 담당 | 내용 | 예상 시간 |
-|------|-----|------|----------|
-| FE-1 | FE 개발자 | Customer (메뉴, 장바구니, 주문) | 2일 |
-| FE-2 | FE 개발자 | Admin (대시보드, 모니터링) | 2일 |
+| Unit | 담당자 | 내용 | 예상 시간 |
+|------|-------|------|----------|
+| FE-1 | 개발자 D | Customer (메뉴, 장바구니, 주문) | 2일 |
+| FE-2 | 개발자 D | Admin (대시보드, 모니터링) | 2일 |
 
 ---
 
 ## Unit 상세
 
-### BE-1: Auth + Shared Types
-**담당**: BE 개발자 1
+### BE-1: Auth
+**담당자**: 개발자 A
 
 **포함 항목:**
-- Shared Types (packages/shared)
 - AuthController, AuthService
 - JWT 생성/검증
 - 로그인 시도 제한 (5회/5분)
@@ -42,12 +50,13 @@
 - POST /api/customer/table/setup
 - POST /api/customer/table/auto-login
 
-**의존성**: 없음 (독립)
+**의존성**: 없음 (독립)  
+**완료 시**: BE-2, BE-3에 Auth 미들웨어 전달
 
 ---
 
 ### BE-2: Menu + Order
-**담당**: BE 개발자 2
+**담당자**: 개발자 B
 
 **포함 항목:**
 - MenuController, MenuService
@@ -63,12 +72,12 @@
 - PATCH /api/admin/orders/:id/status
 - DELETE /api/admin/orders/:id
 
-**의존성**: BE-1 (Shared Types, Auth 미들웨어)
+**의존성**: `// TODO: [AUTH]` - BE-1 완료 시 적용
 
 ---
 
 ### BE-3: Table + SSE
-**담당**: BE 개발자 3
+**담당자**: 개발자 C
 
 **포함 항목:**
 - TableController, TableService
@@ -83,12 +92,12 @@
 - GET /api/customer/sse/orders
 - GET /api/admin/sse/orders
 
-**의존성**: BE-1 (Auth), BE-2 (Order 이벤트 발행)
+**의존성**: `// TODO: [AUTH]` - BE-1 완료 시 적용
 
 ---
 
 ### FE-1: Customer
-**담당**: FE 개발자
+**담당자**: 개발자 D
 
 **포함 항목:**
 - MenuPage (카테고리 사이드바, 메뉴 카드)
@@ -100,12 +109,12 @@
 
 **User Stories**: US-1.1 ~ US-1.5
 
-**의존성**: BE-1, BE-2 API 필요
+**의존성**: Mock API로 선개발 → Phase 2에서 연동
 
 ---
 
 ### FE-2: Admin
-**담당**: FE 개발자
+**담당자**: 개발자 D
 
 **포함 항목:**
 - LoginPage
@@ -118,59 +127,42 @@
 
 **User Stories**: US-2.1 ~ US-2.5, US-3.1 ~ US-3.3
 
-**의존성**: BE-1, BE-2, BE-3 API 필요
+**의존성**: Mock API로 선개발 → Phase 2에서 연동
 
 ---
 
-## 병렬 진행 분석
+## 병렬 개발 구조
 
 ```
-Day 1:
-┌─────────┐ ┌─────────┐ ┌─────────┐
-│  BE-1   │ │  BE-2   │ │  BE-3   │
-│ (Auth)  │ │ (Menu)  │ │ (Table) │
-│         │ │ 시작가능 │ │ 대기    │
-└────┬────┘ └────┬────┘ └────┬────┘
-     │           │           │
-     ▼           │           │
-Day 1 완료       │           │
-     │           │           │
-     └─────┬─────┘           │
-           ▼                 │
-Day 1.5:  BE-2 완료          │
-           │                 │
-           └────────┬────────┘
-                    ▼
-Day 2:           BE-3 완료
+Phase 1 (4명 동시 진행)
+┌─────────────────────────────────────────────────┐
+│ 개발자 A: BE-1 (Auth)                            │
+│ 개발자 B: BE-2 (Menu/Order) [TODO: AUTH]         │
+│ 개발자 C: BE-3 (Table/SSE) [TODO: AUTH]          │
+│ 개발자 D: FE-1 + FE-2 (Mock API)                 │
+└─────────────────────────────────────────────────┘
                     │
-┌───────────────────┴───────────────────┐
-▼                                       ▼
-FE-1 시작                            FE-2 대기
-(BE-1, BE-2 완료 후)                 (BE-3 완료 후)
+                    ▼ BE-1 완료 시 Auth 적용
+Phase 2 (통합)
+┌─────────────────────────────────────────────────┐
+│ - Shared Types 추출 (공통 타입 리팩토링)          │
+│ - Auth 미들웨어 적용 (BE-2, BE-3)                │
+│ - FE ↔ BE 연동                                  │
+└─────────────────────────────────────────────────┘
+                    │
+                    ▼
+Phase 3 (통합 테스트)
 ```
-
----
-
-## 병렬 가능 여부
-
-| Unit | 병렬 가능 | 조건 |
-|------|----------|------|
-| BE-1 | ✅ 즉시 시작 | - |
-| BE-2 | ⚠️ 부분 병렬 | Shared Types 완료 후 (BE-1 Day 0.5) |
-| BE-3 | ⚠️ 부분 병렬 | Auth 미들웨어 완료 후 (BE-1 Day 1) |
-| FE-1 | ❌ 대기 | BE-1, BE-2 완료 후 |
-| FE-2 | ❌ 대기 | FE-1 완료 후 (공통 컴포넌트 재사용) |
 
 ---
 
 ## 권장 일정
 
-| Day | BE-1 | BE-2 | BE-3 | FE |
-|-----|------|------|------|-----|
-| 1 | Shared + Auth | Menu (Mock Auth) | SSE 구조 | API Contract 기반 타입 정의 |
-| 2 | 완료 | Order | Table + SSE 연동 | Customer UI (Mock API) |
-| 3 | 코드 리뷰 | 완료 | 완료 | Customer 연동 |
-| 4 | 통합 테스트 지원 | 통합 테스트 지원 | 통합 테스트 지원 | Admin UI |
-| 5 | - | - | - | Admin 연동 + 테스트 |
+| Day | 개발자 A (BE-1) | 개발자 B (BE-2) | 개발자 C (BE-3) | 개발자 D (FE) |
+|-----|----------------|----------------|----------------|---------------|
+| 1 | Auth 개발 | Menu API | Table API | Customer UI |
+| 2 | Auth 완료 → 전달 | Order API | SSE 연동 | Admin UI |
+| 3 | 통합 지원 | Auth 적용 | Auth 적용 | FE↔BE 연동 |
+| 4 | 통합 테스트 | 통합 테스트 | 통합 테스트 | 통합 테스트 |
 
-**총 예상**: 5일 (병렬 진행 시)
+**총 예상**: 4일 (완전 병렬 진행 시)

@@ -2,44 +2,45 @@
 
 **프로젝트**: 테이블오더 서비스  
 **최종 수정**: 2026-02-25  
-**팀 구성**: PM 1, BE 1, FE 1, QA 1
+**팀 구성**: BE 3명, FE 1명 (총 4명)
 
 ---
 
 ## 개발 전략
 
-**API 명세 먼저 확정 → Backend/Frontend 병렬 개발**
+**4명 완전 병렬 개발 → 통합 → 테스트**
 
 ```
-┌─────────────────────────────────────┐
-│ API Contract (완료)                  │
-│ - Shared Types                      │
-│ - API Endpoints (11개)              │
-└──────────────┬──────────────────────┘
-               │
-      ┌────────┴────────┐
-      ↓                 ↓
-┌───────────┐    ┌───────────┐
-│ Backend   │    │ Frontend  │
-│ (BE 담당)  │    │ (FE 담당)  │
-└─────┬─────┘    └─────┬─────┘
-      │                │
-      └────────┬───────┘
-               ↓
-        ┌───────────┐
-        │ 통합/테스트 │
-        │ (QA 담당)  │
-        └───────────┘
+Phase 1: 병렬 개발 (4명 동시)
+┌────────────────────────────────────────────┐
+│ 개발자 A: BE-1 (Auth)                       │
+│ 개발자 B: BE-2 (Menu/Order)                 │
+│ 개발자 C: BE-3 (Table/SSE)                  │
+│ 개발자 D: FE-1 + FE-2 (Mock API)            │
+└──────────────────┬─────────────────────────┘
+                   │
+                   ▼
+Phase 2: 통합
+┌────────────────────────────────────────────┐
+│ - Shared Types 추출                         │
+│ - Auth 미들웨어 적용                         │
+│ - FE ↔ BE 연동                              │
+└──────────────────┬─────────────────────────┘
+                   │
+                   ▼
+Phase 3: 통합 테스트
 ```
 
 ---
 
 ## Unit 구조
 
-| Unit | 담당 | 내용 |
-|------|-----|------|
-| Unit 1 | Backend 개발자 | Express API, SQLite, SSE |
-| Unit 2 | Frontend 개발자 | Next.js (Customer + Admin) |
+| Unit | 담당자 | 내용 |
+|------|-------|------|
+| BE-1 | 개발자 A | Auth 모듈 |
+| BE-2 | 개발자 B | Menu + Order API |
+| BE-3 | 개발자 C | Table + SSE API |
+| FE-1, FE-2 | 개발자 D | Customer + Admin UI |
 
 ---
 
@@ -49,6 +50,6 @@
 - [x] User Stories (14개, 57 AC)
 - [x] Application Design
 - [x] API Contract
-- [ ] Units Generation (진행 중)
+- [x] Units Generation
 - [ ] Code Generation
 - [ ] Build and Test
