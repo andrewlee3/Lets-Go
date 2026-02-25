@@ -37,23 +37,26 @@ export const initializeDatabase = (): void => {
     console.log('Default admin user created: store1/admin/admin123');
   }
 
-  // Create default table for testing (store1, table-1, password: table123)
-  const tableId = 'table-1';
-  const tableNumber = '1';
+  // Create default tables for testing (store1, table 1-10, password: table123)
   const tablePassword = 'table123';
+  const tablePasswordHash = bcrypt.hashSync(tablePassword, 10);
   
-  const tableKey = `${storeId}:${tableNumber}`;
-  if (!db.tables.has(tableKey)) {
-    const tablePasswordHash = bcrypt.hashSync(tablePassword, 10);
-    db.tables.set(tableKey, {
-      id: tableId,
-      storeId,
-      tableNumber,
-      passwordHash: tablePasswordHash,
-      currentSessionId: null,
-      createdAt: new Date(),
-    });
-    console.log('Default table created: store1/table-1/table123');
+  for (let i = 1; i <= 10; i++) {
+    const tableId = `table-${i}`;
+    const tableNumber = String(i);
+    const tableKey = `${storeId}:${tableNumber}`;
+    
+    if (!db.tables.has(tableKey)) {
+      db.tables.set(tableKey, {
+        id: tableId,
+        storeId,
+        tableNumber,
+        passwordHash: tablePasswordHash,
+        currentSessionId: null,
+        createdAt: new Date(),
+      });
+    }
   }
+  console.log('Default tables created: store1/1-10/table123');
 };
 
