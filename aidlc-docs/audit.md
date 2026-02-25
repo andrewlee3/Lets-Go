@@ -87,3 +87,101 @@
 - 고객 관점 중심 설계, 작업 분배는 기술 설계 이후로 연기
 
 ---
+
+## User Stories - 명확화 질문 답변 수신
+**Timestamp**: 2026-02-25T14:01:01+09:00
+**User Input**: "질문에 대해 답변 남겨놨어 확인하고문서 업데이트 해줘"
+**AI Response**: clarification-questions.md 답변 확인 및 stories.md 업데이트 진행
+**Context**: 
+- Q1: 추가 (카드 형태 메뉴 레이아웃) → US-1.1 AC 추가
+- Q2: 근거 요청 (날짜 필터링) → 역질문, 추가 응답 필요
+- Q3: 매장 식별자 역할 확인 요청 → 역질문, 추가 응답 필요
+- Q4: 좌측 사이드바 → US-1.1 AC 명확화
+- Q5: A (최소 1, 최대 99, 0은 삭제) → US-1.2 AC 명확화
+- Q6: A (장바구니에서 바로 확인) → US-1.3 AC 명확화
+- Q7: A (최신순) → US-1.4 AC 명확화
+- Q8: B (localStorage 암호화) → US-1.5 AC 명확화
+- Q9: A (5회 실패 시 5분 잠금) → US-2.1 AC 명확화
+- Q10: A (모달/팝업) → US-2.2 AC 명확화
+- Q11: A (SSE 실시간) → US-2.3 AC 명확화
+- Q12: A (빨간색 계열) → US-2.4 AC 명확화
+- Q13: B (5개 카테고리, 총 20개) → US-4.1 AC 명확화
+
+---
+
+## User Stories - 명확화 질문 Q2/Q3 추가 답변
+**Timestamp**: 2026-02-25T14:10:07+09:00
+**User Input**: "Q2:MVP에서 제외하고 백로그에 기록/Q3:A 매장 식별자도 추가해줘"
+**AI Response**: Q2 - 날짜 필터링을 backlog.md에 추가, Q3 - US-3.1에 매장 식별자 입력 + 16시간 세션 생성 AC 추가
+**Context**: 
+- Q2: 과거 내역 날짜 필터링 → MVP 제외, backlog 등록
+- Q3: 매장 식별자 입력 + 16시간 세션 생성 → US-3.1 AC 추가 (A 선택)
+- stories.md AC 총계: 53 → 57개 (Epic 1: +2, Epic 3: +2)
+
+---
+
+## User Stories - 검증 결과 반영
+**Timestamp**: 2026-02-25T14:18:31+09:00
+**User Input**: "1번:불필요/2번:추가"
+**AI Response**: US-1.4 페이지네이션 추가 안함, US-2.2에 테이블 번호 표시 AC 추가
+**Context**: 
+- 1번(페이지네이션): 불필요 - 현재 세션 주문만이라 양이 적음
+- 2번(테이블 번호 표시): US-2.2에 AC 추가
+- AC 총계: 57 → 58개
+
+---
+
+## User Stories 승인
+**Timestamp**: 2026-02-25T14:27:22+09:00
+**User Input**: "A삭제 하고 진행"
+**AI Response**: US-2.4 중복 AC 삭제, User Stories 단계 완료 처리, Application Design 단계 시작
+**Context**: 
+- US-2.4 중복 AC "지연 주문이 시각적으로 눈에 띄게 강조된다" 삭제
+- 최종 AC 총계: 57개 (14개 Story, 4개 Epic)
+- User Stories 단계 승인됨
+
+---
+
+## Application Design - 질문 답변 수신
+**Timestamp**: 2026-02-25T14:30:59+09:00
+**User Input**: "답변 달아 두었어"
+**AI Response**: 답변 확인 후 Application Design 산출물 생성
+**Context**: 
+- Q1: B (기능 중심 API)
+- Q2: B (관리자 + 고객 SSE)
+- Q3: B (localStorage + Authorization Header)
+- Q4: A (React Context + useReducer)
+- Q5: A (테이블별 분리 cart_{storeId}_{tableId})
+
+---
+
+## Application Design - 산출물 생성 완료
+**Timestamp**: 2026-02-25T14:31:30+09:00
+**AI Response**: Application Design 산출물 4개 파일 생성
+**Context**: 
+- components.md: Backend 11개, Frontend Customer 7개, Frontend Admin 7개, Shared 3개 컴포넌트
+- component-methods.md: API 엔드포인트 및 서비스 메서드 시그니처
+- services.md: 6개 서비스 정의 및 상호작용 패턴
+- component-dependency.md: 의존성 매트릭스, 데이터 흐름, 모듈 구조
+
+---
+
+## Application Design - 피드백 반영
+**Timestamp**: 2026-02-25T14:54:03+09:00
+**User Input**: "hook으로 하자"
+**AI Response**: SSEProvider → useSSE hook으로 변경, SeedService → MenuService 통합
+**Context**: 
+- SeedService 삭제, MenuService에 initializeSampleMenus() 추가
+- SSEProvider → useSSE (hook)
+- AdminSSEProvider → useAdminSSE (hook)
+- Provider는 상태 공유용(Auth, Cart)만 유지, SSE는 hook으로 변경
+
+---
+
+## Application Design 승인
+**Timestamp**: 2026-02-25T15:07:16+09:00
+**User Input**: "일단 유닛 생성으로 넘어간 다음에 그 결과를 보고 리뷰하면서 다듬어 보자"
+**AI Response**: Application Design 승인 처리, Units Generation 단계 시작
+**Context**: Application Design 산출물 4개 파일 완료, 리뷰는 Units Generation 결과 보고 진행
+
+---
